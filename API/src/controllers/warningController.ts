@@ -1,6 +1,3 @@
-import express, {Request, Response} from 'express';
-import { TupleType } from 'typescript';
-
 
 export const calcAngleDiff = (xyz1: number[], xyz2: number[]) => 
 {
@@ -38,7 +35,7 @@ export const calcAngleDiff = (xyz1: number[], xyz2: number[]) =>
 
     // round to 4 decimal places
     angleDiff = Math.round(angleDiff * 10000) / 10000;
-    
+
     console.log('Angle difference in degrees:', angleDiff);
     return angleDiff;
 

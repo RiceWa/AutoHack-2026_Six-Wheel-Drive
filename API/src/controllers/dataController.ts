@@ -65,16 +65,26 @@ export const compareRunsById = async (req: Request, res: Response) => {
         const accel1: number[] = [tick1.accel.x, tick1.accel.y, tick1.accel.z];
         const accel2: number[] = [tick2.accel.x, tick2.accel.y, tick2.accel.z];
 
-        const angleDiff = calcAngleDiff(accel1, accel2);
-        const magDiff = calcMagitudeDiff(accel1, accel2);
+        const gyro1: number[] = [tick1.gyro.x, tick1.gyro.y, tick1.gyro.z];
+        const gyro2: number[] = [tick2.gyro.x, tick2.gyro.y, tick2.gyro.z];
 
+        const temp1: number = tick1.temp;
+        const temp2: number = tick2.temp;
+
+        const accel1angleDiff = calcAngleDiff(accel1, accel2);
+        const accel2magDiff = calcMagitudeDiff(accel1, accel2);
+
+        const gyroAngleDiff = calcAngleDiff(gyro1, gyro2);
+        
         comparisonResults.push({
             tickIndex: i,
-            angleDifference: angleDiff,
-            magnitudeDifference: magDiff
+            accelerationAngleDifference: accel1angleDiff,
+            accelerationMagnitudeDifference: accel2magDiff,
+            gyroAngleDifference: gyroAngleDiff,
+            tempDifference: Math.abs(temp1 - temp2)
         });
 
-        console.log(`Tick ${i}: Angle difference = ${angleDiff} degrees, Magnitude difference = ${magDiff}`);
+        // console.log(`Tick ${i}: Angle difference = ${accel1angleDiff} degrees, Magnitude difference = ${accel2magDiff}`);
     }
 
     return res.status(200).json(comparisonResults);
