@@ -18,6 +18,9 @@
       <button class="tab active" data-metric="temp">Temp</button>
       <button class="tab" data-metric="accel">Accel</button>
       <button class="tab" data-metric="gyro">Gyro</button>
+      <button class="tab" data-metric="compare-temp">Compare Temp</button>
+      <button class="tab" data-metric="compare-accel">Compare Accel</button>
+      <button class="tab" data-metric="compare-gyro">Compare Gyro</button>
     </nav>
 
     <main class="grid">
@@ -30,7 +33,15 @@
       <section class="card wide">
         <div class="card-head">
           <h2>Live Data</h2>
-          <button id="refresh" class="btn">Refresh</button>
+          <div class="controls">
+            <label class="label" for="run-select">Run A</label>
+            <select id="run-select" class="select"></select>
+            <span id="compare-controls" class="compare-controls">
+              <label class="label" for="run-compare-select">Run B</label>
+              <select id="run-compare-select" class="select"></select>
+            </span>
+            <button id="refresh" class="btn">Refresh</button>
+          </div>
         </div>
         <canvas id="chart" height="220"></canvas>
       </section>
