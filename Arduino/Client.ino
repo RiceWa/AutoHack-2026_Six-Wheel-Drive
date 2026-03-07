@@ -12,9 +12,9 @@
 #define TICK_RATE_HZ 4 // ticks per second (configurable)
 #define TICK_INTERVAL_MS (1000 / TICK_RATE_HZ)
 // Movement thresholds (tune to your environment)
-#define ACCEL_THRESHOLD 0.15f // g-force delta from ~1g gravity baseline
-#define GYRO_THRESHOLD 5.0f // deg/s
-#define STILL_TIMEOUT_MS 4000 // ms of stillness before ending run
+#define ACCEL_THRESHOLD  0.25f   // raise to reduce false triggers from slow rotation
+#define GYRO_THRESHOLD   15.0f   // deg/s — primary trigger for UR10e
+#define STILL_TIMEOUT_MS 6000    // UR10e can pause mid-program; give more buffer
 // Packet types
 #define PKT_START 0x01
 #define PKT_DATA 0x02
@@ -84,14 +84,16 @@ bool sendPacket(uint8_t *buf, size_t len)
     client.stop();
     return false;
 }
-bool isMoving(xyzFloat &acc, xyzFloat &gyr)
-{
-    float accelMag = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
-    bool accelMove = abs(accelMag - 1.0f) > ACCEL_THRESHOLD;
-    bool gyroMove = (abs(gyr.x) > GYRO_THRESHOLD ||
-                     abs(gyr.y) > GYRO_THRESHOLD ||
-                     abs(gyr.z) > GYRO_THRESHOLD);
-    return accelMove || gyroMove;
+bool isMoving(xyzFloat& acc, xyzFloat& gyr) {
+  bool gyroMove = (abs(gyr.x) > GYRO_THRESHOLD ||
+                   abs(gyr.y) > GYRO_THRESHOLD ||
+                   abs(gyr.z) > GYRO_THRESHOLD);
+
+  // Accel catches linear tool motion (e.g. fast linear moves)
+  float accelMag = sqrt(acc.x*acc.x + acc.y*acc.y + acc.z*acc.z);
+  bool accelMove = abs(accelMag - 1.0f) > ACCEL_THRESHOLD;
+
+  return gyroMove || accelMove;
 }
 void sendStartRun()
 {
