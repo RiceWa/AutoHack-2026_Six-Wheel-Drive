@@ -116,6 +116,13 @@ function renderChart(ticks) {
   if (chart) {
     chart.data.labels = labels;
     chart.data.datasets = datasets;
+    if (selectedMetric === 'temp') {
+      chart.options.scales.y.min = 10;
+      chart.options.scales.y.max = 40;
+    } else {
+      delete chart.options.scales.y.min;
+      delete chart.options.scales.y.max;
+    }
     chart.update();
     return;
   }
@@ -136,7 +143,11 @@ function renderChart(ticks) {
       },
       scales: {
         x: { ticks: { color: '#93a0b3' } },
-        y: { ticks: { color: '#93a0b3' } }
+        y: {
+          ticks: { color: '#93a0b3' },
+          min: selectedMetric === 'temp' ? 10 : undefined,
+          max: selectedMetric === 'temp' ? 40 : undefined
+        }
       }
     }
   });
