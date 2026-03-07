@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.calcAngleDifference = exports.calcMagitudeDifference = exports.getTickData = exports.getRunData = void 0;
+exports.calcAngleDifference = exports.calcMagitudeDifference = exports.getTickDataByRunId = exports.getTickData = exports.getRunData = void 0;
 const Run_1 = __importDefault(require("../models/Run"));
 const Tick_1 = __importDefault(require("../models/Tick"));
 const warningController_1 = require("./warningController");
@@ -29,6 +29,16 @@ const getTickData = async (req, res) => {
     return res.status(200).json(data);
 };
 exports.getTickData = getTickData;
+const getTickDataByRunId = async (req, res) => {
+    const runId = req.params.runId;
+    // use model to query
+    const data = await Tick_1.default.find({ runId: runId });
+    if (!data || data.length === 0) {
+        return res.status(404).json({ error: 'No data found' });
+    }
+    return res.status(200).json(data);
+};
+exports.getTickDataByRunId = getTickDataByRunId;
 // export const createData = async (req: Request, res: Response) => {
 //     if (!req.body) {
 //         return res.status(400).json({error: 'Invalid Request body'}); // 400: bad request

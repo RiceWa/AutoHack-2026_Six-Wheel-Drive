@@ -11,7 +11,7 @@ const router = express_1.default.Router();
 // map standard RESTful routes to controller functions
 router.get('/Run', dataController_1.getRunData);
 router.get('/Tick', dataController_1.getTickData);
-// // router.get('/:id', getById);
+router.get('/Tick/:id', dataController_1.getTickDataByRunId);
 // router.post('/', createData);
 // router.put('/:id', update);
 // router.delete('/:id', delete);

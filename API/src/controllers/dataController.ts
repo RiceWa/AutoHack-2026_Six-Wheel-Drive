@@ -35,6 +35,19 @@ export const getTickData = async (req: Request, res: Response) => {
     return res.status(200).json(data);
 };
 
+export const getTickDataByRunId = async (req: Request, res: Response) => {
+
+    const runId = req.params.runId;
+    // use model to query
+    const data =  await Tick.find({runId: runId});
+
+    if(!data || data.length === 0) {
+        return res.status(404).json({error: 'No data found'});
+    }
+    
+    return res.status(200).json(data);
+};
+
 // export const createData = async (req: Request, res: Response) => {
 //     if (!req.body) {
 //         return res.status(400).json({error: 'Invalid Request body'}); // 400: bad request
