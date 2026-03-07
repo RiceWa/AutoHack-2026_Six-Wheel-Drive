@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createData = exports.getData = void 0;
+exports.test = exports.createData = exports.getData = void 0;
 const data_1 = __importDefault(require("../models/data"));
+const warningController_1 = require("./warningController");
 const getData = async (req, res) => {
     // use req.query to get query parameters
     const filter = req.query;
@@ -25,3 +26,7 @@ const createData = async (req, res) => {
     return res.status(201).json(); // 201: resource created
 };
 exports.createData = createData;
+const test = async (req, res) => {
+    return res.status(200).json({ message: (0, warningController_1.calcAccAngleDiff)([0, .5, 1], [0, .7, .9]) }); // should be 90 degrees
+};
+exports.test = test;

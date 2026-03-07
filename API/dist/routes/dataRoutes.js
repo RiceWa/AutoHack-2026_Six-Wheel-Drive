@@ -14,5 +14,6 @@ router.get('/', dataController_1.getData);
 router.post('/', dataController_1.createData);
 // router.put('/:id', update);
 // router.delete('/:id', delete);
+router.get('/test', dataController_1.test);
 // make router public
 exports.default = router;

@@ -1,6 +1,6 @@
 import express, {Request, Response} from 'express';
 import Data from '../models/data';
-
+import { calcAccAngleDiff } from './warningController';
 
 export const getData = async (req: Request, res: Response) => {
 
@@ -26,4 +26,8 @@ export const createData = async (req: Request, res: Response) => {
     // add new game to db from request body
     await Data.create(req.body);
     return res.status(201).json(); // 201: resource created
+};
+
+export const test = async (req: Request, res: Response) => {
+    return res.status(200).json({message: calcAccAngleDiff([0,.5,1], [0,.7,.9])}); // should be 90 degrees
 };

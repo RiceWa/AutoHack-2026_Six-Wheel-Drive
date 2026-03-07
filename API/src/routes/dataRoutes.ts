@@ -1,7 +1,7 @@
 // npm imports
 import express, {Router} from 'express';
 // local file imports
-import {getData, createData} from '../controllers/dataController';
+import {test, getData, createData} from '../controllers/dataController';
 
 const router: Router = express.Router();
 
@@ -11,6 +11,7 @@ router.get('/', getData);
 router.post('/', createData);
 // router.put('/:id', update);
 // router.delete('/:id', delete);
+router.get('/test', test);
 
 // make router public
 export default router;
