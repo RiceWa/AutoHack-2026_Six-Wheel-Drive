@@ -1,22 +1,39 @@
 import express, {Request, Response} from 'express';
-import Data from '../models/data';
-import { calcAccAngleDiff } from './warningController';
+import Run from '../models/Run';
+import Tick from '../models/Tick';
+import { calcAngleDiff, calcMagitudeDiff } from './warningController';
 
-// export const getData = async (req: Request, res: Response) => {
+export const getRunData = async (req: Request, res: Response) => {
 
-//     // use req.query to get query parameters
+    // use req.query to get query parameters
 
-//     const filter = req.query;
+    const filter = req.query;
 
-//     // use model to query 
-//     const data =  await Data.find(filter);
+    // use model to query 
+    const data =  await Run.find(filter);
 
-//     if(!data || data.length === 0) {
-//         return res.status(404).json({error: 'No data found'});
-//     }
+    if(!data || data.length === 0) {
+        return res.status(404).json({error: 'No data found'});
+    }
 
-//     return res.status(200).json(data);
-// };
+    return res.status(200).json(data);
+};
+
+export const getTickData = async (req: Request, res: Response) => {
+
+    // use req.query to get query parameters
+
+    const filter = req.query;
+
+    // use model to query 
+    const data =  await Tick.find(filter);
+
+    if(!data || data.length === 0) {
+        return res.status(404).json({error: 'No data found'});
+    }
+
+    return res.status(200).json(data);
+};
 
 // export const createData = async (req: Request, res: Response) => {
 //     if (!req.body) {
@@ -28,6 +45,21 @@ import { calcAccAngleDiff } from './warningController';
 //     return res.status(201).json(); // 201: resource created
 // };
 
-export const test = async (req: Request, res: Response) => {
-    return res.status(200).json({message: calcAccAngleDiff([0,.5,1], [0,.7,.9])}); // should be 90 degrees
+export const calcMagitudeDifference = async (req: Request, res: Response) => {
+
+    const vector1 = JSON.parse(req.query.v1 as string) as number[];
+    const vector2 = JSON.parse(req.query.v2 as string) as number[];
+
+    return res.status(200).json({message: calcMagitudeDiff(vector1, vector2)}); // should be 90 degrees
+    // Example: http://localhost:4000/api/data/calcMagitudeDifference?v1=[1,%201,%201]&v2=[2,1,0]
+};
+
+
+export const calcAngleDifference = async (req: Request, res: Response) => {
+
+    const vector1 = JSON.parse(req.query.v1 as string) as number[];
+    const vector2 = JSON.parse(req.query.v2 as string) as number[];
+
+    return res.status(200).json({message: calcAngleDiff(vector1, vector2)}); // should be 90 degrees
+    // Example: http://localhost:4000/api/data/calcMagitudeDifference?v1=[1,%201,%201]&v2=[2,1,0]
 };

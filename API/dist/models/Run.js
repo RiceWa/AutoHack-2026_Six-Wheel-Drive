@@ -35,6 +35,11 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const RunSchema = new mongoose_1.Schema({
+    runType: {
+        type: String,
+        enum: ['prod', 'config'],
+        default: 'prod'
+    },
     deviceId: { type: Number, required: [true, 'Device ID required'] },
     tickRate: { type: Number, required: [true, 'Tick rate required'] },
     startTime: { type: Date, required: [true, 'Start time required'] },
