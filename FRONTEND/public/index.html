@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sensor Monitor Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Sensor Monitor Dashboard</h1>
+      <div class="status" id="status">Connecting…</div>
+    </header>
+
+    <nav class="tabs" aria-label="Sensor tabs">
+      <button class="tab active" data-sensor="sensor-1">Sensor 1</button>
+      <button class="tab" data-sensor="sensor-2">Sensor 2</button>
+      <button class="tab" data-sensor="sensor-3">Sensor 3</button>
+    </nav>
+
+    <main class="grid">
+      <section class="card">
+        <h2>Latest Sensor Value</h2>
+        <div class="value" id="latest-value">--</div>
+        <div class="sub" id="latest-time">--</div>
+      </section>
+
+      <section class="card wide">
+        <div class="card-head">
+          <h2>Live Data</h2>
+          <button id="refresh" class="btn">Refresh</button>
+        </div>
+        <canvas id="chart" height="120"></canvas>
+      </section>
+
+      <section class="card">
+        <h2>System</h2>
+        <ul class="list">
+          <li>API: <span id="api-status">unknown</span></li>
+          <li>Samples: <span id="sample-count">0</span></li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
