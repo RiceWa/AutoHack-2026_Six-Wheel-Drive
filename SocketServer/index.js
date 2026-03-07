@@ -12,7 +12,7 @@ const PKT_END = 0x03;
 
 // Packet sizes
 const PKT_START_SIZE = 3;
-const PKT_DATA_SIZE = 34;
+const PKT_DATA_SIZE = 50;
 const PKT_END_SIZE = 2;
 
 // Per-device run state
@@ -74,6 +74,12 @@ async function handlePacket(packet) {
             const gyroZ = packet.readFloatLE(26);
             const temp = packet.readFloatLE(30);
 
+            const joint1Vibration = packet.readFloatLE(34);
+            const joint2Vibration = packet.readFloatLE(38);
+
+            const joint1Temp = packet.readFloatLE(42);
+            const joint2Temp = packet.readFloatLE(46);
+
             if (state.lastTick !== -1 && tick !== state.lastTick + 1) {
                 const dropped = tick - state.lastTick - 1;
                 console.warn(`[${deviceId}] ⚠ ${dropped} dropped packet(s) between tick ${state.lastTick} and ${tick}`);
@@ -89,6 +95,8 @@ async function handlePacket(packet) {
                     accel: { x: accelX, y: accelY, z: accelZ },
                     gyro: { x: gyroX, y: gyroY, z: gyroZ },
                     temp,
+                    joint1: { vibr: joint1Vibration, temp: joint1Humidity },
+                    joint2: { vibr: joint2Vibration, temp: joint2Humidity }
                 });
             }
 
@@ -96,7 +104,9 @@ async function handlePacket(packet) {
                 `[${deviceId}] tick=${String(tick).padStart(6)} ` +
                 `accel=(${accelX.toFixed(2)}, ${accelY.toFixed(2)}, ${accelZ.toFixed(2)}) ` +
                 `gyro=(${gyroX.toFixed(2)}, ${gyroY.toFixed(2)}, ${gyroZ.toFixed(2)}) ` +
-                `temp=${temp.toFixed(1)}°C`
+                `temp=${temp.toFixed(1)}°C `+ 
+                `joint1=(vib=${joint1Vibration}, temp=${joint1Humidity})°C ` + 
+                `joint2=(vib=${joint2Vibration}, temp=${joint2Humidity})°C `
             );
             break;
         }
