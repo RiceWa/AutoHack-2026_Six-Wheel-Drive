@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sensor Monitor Dashboard</title>
+    <title>Six Wheel Drive Dashboard</title>
     <link rel="stylesheet" href="/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
     <script src="/app.js" defer></script>
   </head>
   <body>
     <header class="topbar">
-      <h1>Sensor Monitor Dashboard</h1>
+      <h1>Six Wheel Drive Dashboard</h1>
       <div class="status" id="status">Connecting…</div>
     </header>
 
@@ -18,6 +18,9 @@
       <button class="tab active" data-metric="temp">Temp</button>
       <button class="tab" data-metric="accel">Accel</button>
       <button class="tab" data-metric="gyro">Gyro</button>
+      <button class="tab" data-metric="compare-temp">Compare Temp</button>
+      <button class="tab" data-metric="compare-accel">Compare Accel</button>
+      <button class="tab" data-metric="compare-gyro">Compare Gyro</button>
     </nav>
 
     <main class="grid">
@@ -30,7 +33,15 @@
       <section class="card wide">
         <div class="card-head">
           <h2>Live Data</h2>
-          <button id="refresh" class="btn">Refresh</button>
+          <div class="controls">
+            <label class="label" for="run-select">Run A</label>
+            <select id="run-select" class="select"></select>
+            <span id="compare-controls" class="compare-controls">
+              <label class="label" for="run-compare-select">Run B</label>
+              <select id="run-compare-select" class="select"></select>
+            </span>
+            <button id="refresh" class="btn">Refresh</button>
+          </div>
         </div>
         <canvas id="chart" height="220"></canvas>
       </section>
