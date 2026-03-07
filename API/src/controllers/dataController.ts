@@ -56,6 +56,8 @@ export const compareRunsById = async (req: Request, res: Response) => {
     const data1 =  await Tick.find({runId: runId1});
     const data2 =  await Tick.find({runId: runId2});
 
+    const comparisonResults = [];
+
     for (let i = 0; i < Math.min(data1.length, data2.length); i++) {
         const tick1 = data1[i];
         const tick2 = data2[i];
@@ -65,10 +67,17 @@ export const compareRunsById = async (req: Request, res: Response) => {
 
         const angleDiff = calcAngleDiff(accel1, accel2);
         const magDiff = calcMagitudeDiff(accel1, accel2);
+
+        comparisonResults.push({
+            tickIndex: i,
+            angleDifference: angleDiff,
+            magnitudeDifference: magDiff
+        });
+
         console.log(`Tick ${i}: Angle difference = ${angleDiff} degrees, Magnitude difference = ${magDiff}`);
     }
 
-    return res.status(200).json();
+    return res.status(200).json(comparisonResults);
 };
 
 

@@ -23,8 +23,11 @@ const calcAngleDiff = (xyz1, xyz2) => {
     // cosθ= a1⋅a2 / (∣a1​∣∣a2​∣)
     var cosTheta = dotProduct / (magA1 * magA2);
     console.log('Cosine of angle difference:', cosTheta);
+    cosTheta = Math.max(-1, Math.min(1, cosTheta));
     // θ = arccos(cosθ)
     var angleDiff = Math.acos(cosTheta) * (180 / Math.PI); // convert to degrees
+    // round to 4 decimal places
+    angleDiff = Math.round(angleDiff * 10000) / 10000;
     console.log('Angle difference in degrees:', angleDiff);
     return angleDiff;
 };

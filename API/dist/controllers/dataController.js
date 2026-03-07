@@ -45,6 +45,7 @@ const compareRunsById = async (req, res) => {
     // use model to query
     const data1 = await Tick_1.default.find({ runId: runId1 });
     const data2 = await Tick_1.default.find({ runId: runId2 });
+    const comparisonResults = [];
     for (let i = 0; i < Math.min(data1.length, data2.length); i++) {
         const tick1 = data1[i];
         const tick2 = data2[i];
@@ -52,9 +53,14 @@ const compareRunsById = async (req, res) => {
         const accel2 = [tick2.accel.x, tick2.accel.y, tick2.accel.z];
         const angleDiff = (0, warningController_1.calcAngleDiff)(accel1, accel2);
         const magDiff = (0, warningController_1.calcMagitudeDiff)(accel1, accel2);
+        comparisonResults.push({
+            tickIndex: i,
+            angleDifference: angleDiff,
+            magnitudeDifference: magDiff
+        });
         console.log(`Tick ${i}: Angle difference = ${angleDiff} degrees, Magnitude difference = ${magDiff}`);
     }
-    return res.status(200).json();
+    return res.status(200).json(comparisonResults);
 };
 exports.compareRunsById = compareRunsById;
 const calcMagitudeDifference = async (req, res) => {
