@@ -6,11 +6,25 @@ interface IVec3 {
     z: number;
 }
 
+
+interface IJoint {
+    vibr: number, 
+    temp: number
+}
+
 const Vec3Schema = new Schema<IVec3>(
     {
         x: { type: Number, required: true },
         y: { type: Number, required: true },
         z: { type: Number, required: true },
+    },
+    { _id: false }
+);
+
+const JointSchema = new Schema<IJoint>(
+    {
+        vibr: { type: Number, required: true },
+        temp: { type: Number, required: true }
     },
     { _id: false }
 );
@@ -23,6 +37,8 @@ export interface ITick {
     accel: IVec3;
     gyro: IVec3;
     temp: number;
+    joint1: IJoint;
+    joint2: IJoint;
 }
 
 const TickSchema = new Schema<ITick>({
@@ -33,6 +49,8 @@ const TickSchema = new Schema<ITick>({
     accel: { type: Vec3Schema, required: [true, 'Accel required'] },
     gyro: { type: Vec3Schema, required: [true, 'Gyro required'] },
     temp: { type: Number, required: [true, 'Temperature required'] },
+    joint1: { type: JointSchema, required: false },
+    joint2: { type: JointSchema, required: false },
 });
 
 const Tick: Model<ITick> = mongoose.models.Tick ?? mongoose.model<ITick>('Tick', TickSchema);
