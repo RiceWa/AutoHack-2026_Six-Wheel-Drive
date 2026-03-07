@@ -17,5 +17,6 @@ router.get('/Tick/:id', dataController_1.getTickDataByRunId);
 // router.delete('/:id', delete);
 router.get('/calcAngDiff', dataController_1.calcAngleDifference);
 router.get('/calcMagDiff', dataController_1.calcMagitudeDifference);
+router.get('/compareRuns/:runId1/:runId2', dataController_1.compareRunsById);
 // make router public
 exports.default = router;

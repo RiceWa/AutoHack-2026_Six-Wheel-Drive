@@ -1,7 +1,7 @@
 // npm imports
 import express, {Router} from 'express';
 // local file imports
-import {calcAngleDifference, calcMagitudeDifference, getRunData, getTickData, getTickDataByRunId} from '../controllers/dataController';
+import {calcAngleDifference, calcMagitudeDifference, getRunData, getTickData, getTickDataByRunId, compareRunsById} from '../controllers/dataController';
 
 const router: Router = express.Router();
 
@@ -14,6 +14,8 @@ router.get('/Tick/:id', getTickDataByRunId);
 // router.delete('/:id', delete);
 router.get('/calcAngDiff', calcAngleDifference);
 router.get('/calcMagDiff', calcMagitudeDifference);
+
+router.get('/compareRuns/:runId1/:runId2', compareRunsById);
 
 // make router public
 export default router;

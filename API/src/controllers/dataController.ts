@@ -48,15 +48,31 @@ export const getTickDataByRunId = async (req: Request, res: Response) => {
     return res.status(200).json(data);
 };
 
-// export const createData = async (req: Request, res: Response) => {
-//     if (!req.body) {
-//         return res.status(400).json({error: 'Invalid Request body'}); // 400: bad request
-//     }
+export const compareRunsById = async (req: Request, res: Response) => {
 
-//     // add new game to db from request body
-//     await Data.create(req.body);
-//     return res.status(201).json(); // 201: resource created
-// };
+    const runId1 = req.params.runId1;
+    const runId2 = req.params.runId2;
+    // use model to query
+    const data1 =  await Tick.find({runId: runId1});
+    const data2 =  await Tick.find({runId: runId2});
+
+    for (let i = 0; i < Math.min(data1.length, data2.length); i++) {
+        const tick1 = data1[i];
+        const tick2 = data2[i];
+
+        const accel1: number[] = [tick1.accel.x, tick1.accel.y, tick1.accel.z];
+        const accel2: number[] = [tick2.accel.x, tick2.accel.y, tick2.accel.z];
+
+        const angleDiff = calcAngleDiff(accel1, accel2);
+        const magDiff = calcMagitudeDiff(accel1, accel2);
+        console.log(`Tick ${i}: Angle difference = ${angleDiff} degrees, Magnitude difference = ${magDiff}`);
+    }
+
+    return res.status(200).json();
+};
+
+
+
 
 export const calcMagitudeDifference = async (req: Request, res: Response) => {
 
