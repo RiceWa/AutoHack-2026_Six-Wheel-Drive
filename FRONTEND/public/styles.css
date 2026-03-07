@@ -73,6 +73,7 @@ body {
 
 .card.wide {
   grid-column: span 8;
+  min-height: 360px;
 }
 
 .card h2 {
