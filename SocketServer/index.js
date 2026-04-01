@@ -95,8 +95,8 @@ async function handlePacket(packet) {
                     accel: { x: accelX, y: accelY, z: accelZ },
                     gyro: { x: gyroX, y: gyroY, z: gyroZ },
                     temp,
-                    joint1: { vibr: joint1Vibration, temp: joint1Humidity },
-                    joint2: { vibr: joint2Vibration, temp: joint2Humidity }
+                    joint1: { vibr: joint1Vibration, temp: joint1Temp },
+                    joint2: { vibr: joint2Vibration, temp: joint2Temp }
                 });
             }
 
@@ -105,8 +105,8 @@ async function handlePacket(packet) {
                 `accel=(${accelX.toFixed(2)}, ${accelY.toFixed(2)}, ${accelZ.toFixed(2)}) ` +
                 `gyro=(${gyroX.toFixed(2)}, ${gyroY.toFixed(2)}, ${gyroZ.toFixed(2)}) ` +
                 `temp=${temp.toFixed(1)}°C `+ 
-                `joint1=(vib=${joint1Vibration}, temp=${joint1Humidity})°C ` + 
-                `joint2=(vib=${joint2Vibration}, temp=${joint2Humidity})°C `
+                `joint1=(vib=${joint1Vibration}, temp=${Math.round(joint1Temp)}°C) ` + 
+                `joint2=(vib=${joint2Vibration}, temp=${Math.round(joint2Temp)}°C) `
             );
             break;
         }
